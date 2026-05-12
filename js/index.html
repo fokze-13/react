@@ -6,6 +6,26 @@
 </head>
 <body>
 
-<script></script>
+<div id="p_hello"><p>Noice</p></div>
+
+<script>
+    let elem = document.getElementById("p_hello")
+
+    function changeColor(e) {
+        e.style.color = "#f00"
+        e.style.border = "inset"
+        e.align = "middle"
+    }
+
+    const func = (name) => {
+        return "John Doe"
+    }
+
+    alert(func());
+
+    changeColor(elem);
+    console.log(elem.innerText);
+
+</script>
 </body>
 </html>
