@@ -1,38 +1,56 @@
 import { useState } from 'react';
+import './index.css';
 
+function App() {
+  const [users, setUsers] = useState([]);
+  const [input, setInput] = useState("");
 
-function App () {
-    const [users, setUser] = useState([]);
-    const [input, setInput] = useState("");
+  function addUser() {
+    if (input.trim() === "") return;
+    setUsers(users => [...users, input.trim()]);
+    setInput("");
+  }
 
-    function addUser(name) {
-        if (name === "") {
-            return
-        }
+  function deleteUser(index) {
+    setUsers(users => users.filter((_, i) => i !== index));
+  }
 
-        setUser(
-            users => [...users, name]
-        )
-    }
+  return (
+    <div className="bg">
+      <div className="card">
+        <h2 className="card-title">Список пользователей</h2>
 
-    function deleteUser(name) {
-        setUser(
-            users => users.filter(user => user !== name)
-        )
-        // console.log(name)
-        // console.log(users)
-    }
-
-    return (
-        <div>
-            <input value={input} onChange={(e) => setInput(e.target.value)}/>
-            <button onClick={() => {addUser(input); setInput("")}}> Add user </button>
-            <ul>
-                {users.map((user, index) => (<li key={index} onClick={() => (deleteUser(user))}>{user}</li>))}
-            </ul>
+        <div className="input-row">
+          <input
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && addUser()}
+            placeholder="Введите имя..."
+          />
+          <button className="add-btn" onClick={addUser}>
+            + Добавить
+          </button>
         </div>
-    );
-}
 
+        {users.length === 0 ? (
+          <p className="empty">Список пуст — добавьте первого пользователя</p>
+        ) : (
+          <ul>
+            {users.map((user, index) => (
+              <li key={index}>
+                <span>{user}</span>
+                <button className="del-btn" onClick={() => deleteUser(index)}>✕</button>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {users.length > 0 && (
+          <p className="count">Пользователей: {users.length}</p>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default App;
