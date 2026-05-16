@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import './index.css';
 
 
 function App () {
@@ -16,12 +15,20 @@ function App () {
         )
     }
 
+    function deleteUser(name) {
+        setUser(
+            users => users.filter(user => user !== name)
+        )
+        // console.log(name)
+        // console.log(users)
+    }
+
     return (
         <div>
             <input value={input} onChange={(e) => setInput(e.target.value)}/>
             <button onClick={() => {addUser(input); setInput("")}}> Add user </button>
             <ul>
-                {users.map((user, index) => (<li key={index}>{user}</li>))}
+                {users.map((user, index) => (<li key={index} onClick={() => (deleteUser(user))}>{user}</li>))}
             </ul>
         </div>
     );
